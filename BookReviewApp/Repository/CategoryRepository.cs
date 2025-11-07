@@ -30,6 +30,24 @@ public class CategoryRepository : ICategoryRepository
             .ToList();
     }
 
+    public bool CreateCategory(Category category)
+    {
+        _context.Categories.Add(category);
+        return _context.SaveChanges() > 0;
+    }
+
+    public bool UpdateCategory(Category category)
+    {
+        _context.Categories.Update(category);
+        return _context.SaveChanges()>0;
+    }
+
+    public bool DeleteCategory(Category category)
+    {
+        _context.Categories.Remove(category);
+        return _context.SaveChanges() > 0;
+    }
+
     public bool CategoryExists(int categoryId)
     {
         return _context.Categories.Any(c => c.Id == categoryId);

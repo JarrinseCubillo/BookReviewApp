@@ -56,4 +56,64 @@ public class CategoriesController:ControllerBase
          return BadRequest(ModelState);
       return Ok(books);
    }
+
+   [HttpPost]
+   [ProducesResponseType(204)]
+   [ProducesResponseType(400)]
+   public IActionResult CreateCategory([FromBody] CategoryDTO newCategory)
+   {
+      if (newCategory == null)
+         return BadRequest("Invalid Category Data.");
+      var existingCategory = _categoryRepository.GetCagories()
+         .FirstOrDefault(c => c.Name.Trim().ToUpper() == newCategory.Name.Trim().ToUpper());
+      if (existingCategory != null)
+      {
+         ModelState.AddModelError("","Category Already Exists.");
+         return StatusCode(422);
+      }
+
+      var createdCategory = new Category { Name = newCategory.Name };
+      if (!_categoryRepository.CreateCategory(createdCategory))
+      {
+         ModelState.AddModelError("","Something went wrong while saving the category.");
+         return StatusCode(500,ModelState);
+      }
+      return Ok("Category successfully created!");
+   }
+   
+   [HttpPut("{categoryId}")]
+   [ProducesResponseType(204)]
+   [ProducesResponseType(400)]
+   public IActionResult UpdateCategory(int categoryId,[FromBody] CategoryDTO updatedCategory)
+   {
+      if (updatedCategory == null || categoryId != updatedCategory.Id)
+         return BadRequest("Invalid category data.");
+      if (!_categoryRepository.CategoryExists(categoryId))
+         return BadRequest("Category not found");
+      var categoryToUpdate = _categoryRepository.GetCategory(categoryId);
+      categoryToUpdate.Name = updatedCategory.Name;
+      if (!ModelState.IsValid)
+         return BadRequest(ModelState);
+      _categoryRepository.UpdateCategory(categoryToUpdate);
+      return Ok("Category successfully updated!");
+   }
+
+   [HttpDelete("{categoryId}")]
+   [ProducesResponseType(204)]
+   [ProducesResponseType(400)]
+   public IActionResult DeleteCategory(int categoryId)
+   {
+      if (!_categoryRepository.CategoryExists(categoryId))
+         return BadRequest("Category not found.");
+      var categoryToDelete = _categoryRepository.GetCategory(categoryId);
+      if (!ModelState.IsValid)
+         return BadRequest(ModelState);
+      if (!_categoryRepository.DeleteCategory(categoryToDelete))
+      {
+         ModelState.AddModelError("","Something went wrong while deleting the category.");
+         return StatusCode(500, ModelState);
+      }
+      return Ok("Category successfully deleted!");
+   }
+   
 }

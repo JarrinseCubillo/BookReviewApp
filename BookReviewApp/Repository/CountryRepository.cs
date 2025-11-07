@@ -28,11 +28,17 @@ public class CountryRepository : ICountryRepository
             .FirstOrDefault();
     }
 
+    public bool UpdateCountry(Country country)
+    {
+        _context.Countries.Update(country);
+        return _context.SaveChanges() > 0;
+    }
+
     public bool CountryExists(int countryId)
     {
         return _context.Countries.Any(c => c.Id == countryId);
     }
-
+    
     public ICollection<Author> GetAuthorsFromCountry(int countryId)
     {
         return _context.Authors.Where(a => a.Country.Id == countryId).ToList();

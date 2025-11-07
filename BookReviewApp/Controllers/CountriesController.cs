@@ -47,6 +47,24 @@ public class CountriesController: ControllerBase
         return Ok(country);
     }
 
+    [HttpPut("{countryId}")]
+    [ProducesResponseType(204)]
+    [ProducesResponseType(400)]
+    public IActionResult UpdateCountry(int countryId, [FromBody] CountryDTO updatedCountry)
+    {
+        if (updatedCountry == null || countryId != updatedCountry.Id)
+            return BadRequest("Invalid country data.");
+        if (!_countryRepository.CountryExists(countryId))
+            return BadRequest("Country Not Found.");
+        var countryToUpdate = _countryRepository.GetCountry(countryId);
+        countryToUpdate.Name = updatedCountry.Name;
+        if (!ModelState.IsValid)
+            return BadRequest(ModelState);
+        _countryRepository.UpdateCountry(countryToUpdate);
+        return Ok("Country successfully updated!");
+    }
+    
+    
     [HttpGet("author/{authorId}")]
     [ProducesResponseType(200, Type = typeof(CountryDTO))]
     [ProducesResponseType(400)]
