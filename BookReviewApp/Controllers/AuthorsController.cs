@@ -50,17 +50,24 @@ public class AuthorsController:ControllerBase
     [ProducesResponseType(400)]
     public IActionResult GetAuthorsOfBooks(int bookId)
     {
-        var author = _authorRepository.GetAuthorsOfBooks(bookId).Select(a=>new AuthorDTO
+        try
         {
-            Id=a.Id,
-            Name=a.Name,
-            Bio=a.Bio,
-        });
-        if (author == null)
-            return NotFound("Book not found or Author is not assigned.");
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        return Ok(author);
+            var author = _authorRepository.GetAuthorsOfBooks(bookId).Select(a=>new AuthorDTO
+            {
+                Id=a.Id,
+                Name=a.Name,
+                Bio=a.Bio,
+            });
+            if (!author.Any())
+                return NotFound("Book not found or Author is not assigned.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            return Ok(author);
+        }
+        catch (Exception ex)
+        {
+            return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
+        }
     }
 
     [HttpGet("{authorId}/books")]

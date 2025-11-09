@@ -70,16 +70,21 @@ public class CountriesController: ControllerBase
     [ProducesResponseType(400)]
     public IActionResult GetCountryByAuthor(int authorId)
     {
-        var country = _countryRepository.GetCountryByAuthor(authorId) is var c?new CountryDTO()
+        try
         {
-            Id = c.Id,
-            Name=c.Name,
-        }:null;
-        if (country == null)
-            return NotFound("Author not found or has no country assigned.");
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-        return Ok(country);
+          var country = _countryRepository.GetCountryByAuthor(authorId) is var c
+                        ? new CountryDTO()
+          { Id = c.Id,
+            Name = c.Name,
+          }: null;
+          if (!ModelState.IsValid)
+             return BadRequest(ModelState);
+          return Ok(country);
+        }
+        catch (Exception ex)
+        { 
+          return StatusCode(500, $"An unexpected error occurred: {ex.Message}");
+        }
 
     }
 
