@@ -1,4 +1,4 @@
-## Book Review API <code><img height="40" src="https://icon.icepanel.io/Technology/svg/.NET-core.svg" alt="Netcore"></code> <code><img height="40" src="https://icon.icepanel.io/Technology/svg/.NET.svg" alt="Dotnet"></code> <code><img height="40" src="https://icon.icepanel.io/Technology/svg/Docker.svg" alt="Docker"></code> <code><img height="40" src="https://icon.icepanel.io/Technology/png-shadow-512/Microsoft-SQL-Server.png" alt="Docker"></code> <code><img height="40" src="https://logodix.com/logo/2029138.png" alt="Docker"></code>
+## Book Review API <code><img height="40" src="https://icon.icepanel.io/Technology/svg/.NET-core.svg" alt="Netcore"></code> <code><img height="40" src="https://icon.icepanel.io/Technology/svg/.NET.svg" alt="Dotnet"></code> <code><img height="40" src="https://icon.icepanel.io/Technology/svg/Docker.svg" alt="Docker"></code> <code><img height="40" src="https://icon.icepanel.io/Technology/png-shadow-512/Microsoft-SQL-Server.png" alt="Docker"></code> <code><img height="40" src="https://logodix.com/logo/2029138.png" alt="Xunit"></code>
 ### API application with .NET Core 10 to be consumed from any service
 
 1. Tested with ApiDog
