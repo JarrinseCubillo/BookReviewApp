@@ -8,5 +8,6 @@
 6. Repository Pattern for clean data access
 7. DTOs (Data Transfer Objects) for safe data exposure
 8. Full CRUD operations (Create, Read, Update, Delete)
+9. Unit Testing (FakeItEasy,FluentAssertions,Xunit,MEFC.InMemory to Repository tests).
 
 <img src="https://user-images.githubusercontent.com/74038190/212746035-d5c61762-973c-44c0-aec7-887f3b7690e3.gif" >
